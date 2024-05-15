@@ -1,0 +1,246 @@
+% ----------------------- TODO ---------------------------
+% Diese Daten müssen pro Blatt angepasst werden:
+\newcommand{\NUMBER}{2}
+\newcommand{\EXERCISES}{5}
+% Diese Daten müssen einmalig pro Vorlesung angepasst werden:
+\newcommand{\COURSE}{Grundlagen des Internets}
+\newcommand{\TUTOR}{}
+\newcommand{\STUDENTA}{Moritz Hahn}
+\newcommand{\STUDENTB}{Sarah Altenkrüger}
+\newcommand{\STUDENTC}{}
+\newcommand{\DEADLINE}{06.05.2024}
+% ----------------------- TODO ---------------------------
+
+\documentclass[a4paper]{scrartcl}
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{lastpage}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{pdflscape}
+\usepackage{subfigure}
+\usepackage{float}
+\usepackage{polynom}
+\usepackage{hyperref}
+\usepackage{tabularx}
+\usepackage{forloop}
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage{fancybox}
+\usepackage{tikz}
+\usepackage{tabto}
+%Größe der Ränder setzen
+\geometry{a4paper,left=3cm, right=3cm, top=3cm, bottom=3cm}
+
+%Kopf- und Fußzeile
+\pagestyle {fancy}
+\fancyhead[L]{Tutor: \TUTOR}
+\fancyhead[C]{\COURSE}
+\fancyhead[R]{\today}
+
+\fancyfoot[L]{}
+\fancyfoot[C]{} 
+\fancyfoot[R]{Seite \thepage /\pageref*{LastPage}}
+
+%Formatierung der Überschrift, hier nichts ändern
+\def\header#1#2{
+  \begin{center}
+    {\Large Übungsblatt #1}\\
+    {(Abgabetermin #2)}
+  \end{center}
+}
+
+%Definition der Punktetabelle, hier nichts ändern
+\newcounter{punktelistectr}
+\newcounter{punkte}
+\newcommand{\punkteliste}[2]{%
+  \setcounter{punkte}{#2}%
+  \addtocounter{punkte}{-#1}%
+  \stepcounter{punkte}%<-- also punkte = m-n+1 = Anzahl Spalten[1]
+  \begin{center}%
+  \begin{tabularx}{\linewidth}[]{@{}*{\thepunkte}{>{\centering\arraybackslash} X|}@{}>{\centering\arraybackslash}X}
+      \forloop{punktelistectr}{#1}{\value{punktelistectr} < #2 } %
+      {%
+        \thepunktelistectr &
+      }
+      #2 &  $\Sigma$ \\
+      \hline
+      \forloop{punktelistectr}{#1}{\value{punktelistectr} < #2 } %
+      {%
+        &
+      } &\\
+      \forloop{punktelistectr}{#1}{\value{punktelistectr} < #2 } %
+      {%
+        &
+      } &\\
+    \end{tabularx}
+  \end{center}
+}
+
+\begin{document}
+
+\begin{tabularx}{\linewidth}{m{0.2 \linewidth}X}
+  \begin{minipage}{\linewidth}
+    \STUDENTA\\
+    \STUDENTB\\
+    \STUDENTC
+  \end{minipage} & \begin{minipage}{\linewidth}
+    \punkteliste{1}{\EXERCISES}
+  \end{minipage}\\
+\end{tabularx}
+
+\header{Nr. \NUMBER}{\DEADLINE}
+
+
+
+% ----------------------- TODO ---------------------------
+% Hier werden die Aufgaben/Lösungen eingetragen:
+
+\section*{Aufgabe 2.1}
+\begin{table}[!htb]
+\centering
+\caption{R1}
+\begin{tabular}{|l|l|l|l|}
+\hline
+In-Port & In-Label & Out-Port & Out-Label \\ \hline
+-       & -        & IF0      & L1        \\ \hline
+IF0     & L5       & -        & -         \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[!htb]
+\centering
+\caption{R2}
+\begin{tabular}{|l|l|l|l|}
+\hline
+In-Port & In-Label & Out-Port & Out-Label \\ \hline
+-       & -        & IF0      & L4        \\ \hline
+IF0     & L6       & -        & -         \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[!htb]
+\centering
+\caption{R3}
+\begin{tabular}{|l|l|l|l|}
+\hline
+In-Port & In-Label & Out-Port & Out-Label \\ \hline
+IF0     & L2       & -        & -         \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[!htb]
+\centering
+\caption{R4}
+\begin{tabular}{|l|l|l|l|}
+\hline
+In-Port & In-Label & Out-Port & Out-Label \\ \hline
+IF0     & L1       & IF2      & L3        \\ \hline
+IF2     & L1       & IF0      & L5        \\ \hline
+IF2     & L1       & IF1      & L6        \\ \hline
+IF1     & L4       & IF2      & L3        \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[!htb]
+\centering
+\caption{R5}
+\begin{tabular}{|l|l|l|l|}
+\hline
+In-Port & In-Label & Out-Port & Out-Label \\ \hline
+IF0     & L3       & IF2      & L2        \\ \hline
+IF2     & L3       & IF0      & L1        \\ \hline
+IF2     & L1       & IF1      & L2        \\ \hline
+\end{tabular}
+\end{table}
+
+
+\begin{table}[h]
+\centering
+\caption{R6}
+\begin{tabular}{|l|l|l|l|}
+\hline
+In-Port & In-Label & Out-Port & Out-Label \\ \hline
+IF0     & L2       & -        & -         \\ \hline
+-       & -        & IF0      & L3        \\ \hline
+-       & -        & IF0      & L1        \\ \hline
+\end{tabular}
+\end{table}
+\newpage
+\section*{Aufgabe 2.2}
+\subsection*{1.)}
+A: L0 \\
+B: L1 \\
+C: L2 \\
+D: L3 
+\subsection*{2.)}
+A: L0 \\
+B: L1 \\
+C: L2 \\
+D: L3 
+\subsection*{3.)}
+A: L0 \\
+B: L1, L0 \\
+C: L2, L 0 \\
+D: L3 
+\subsection*{4.)}
+A: L0 \\
+B: L1, L0 \\
+C: L2, L0 \\
+D: L3 
+
+\section*{Aufgabe 2.3}
+\subsection*{1.)}
+Routing bezieht sich auf den Prozess der Bestimmung des besten Pfades für den Datenverkehr von einer Quelle zu einem Ziel über ein Netzwerk. 
+Dies geschieht anhand von Routing-Algorithmen und Routing-Tabellen, die Informationen über die verfügbaren Wege und deren Metriken enthalten. \\
+Forwarding hingegen ist der Prozess, bei dem tatsächlich Datenpakete gemäß den Einträgen in der Routing-Tabelle weitergeleitet werden. 
+Es ist die physische Aktion, die Daten von einem Interface zum anderen bewegt, basierend auf den Informationen aus der Routing-Tabelle. 
+Forwarding ist eher eine Funktion der Hardware (z. B. Router), während Routing eher eine Funktion der Software ist.
+\subsection*{2.)}
+Netze werden in Subnetze unterteilt, um die Effizienz der Adressnutzung zu erhöhen und die Verwaltung von IP-Adressen zu vereinfachen. \\
+\underline{Vorteil:} Subnetze ermöglichen eine bessere Nutzung von IP-Adressen, da sie es ermöglichen, große Adressbereiche in kleinere, handhabbare Gruppen aufzuteilen. \\
+Dies reduziert die Anzahl der benötigten Broadcast-Domänen und minimiert die Größe von Routing-Tabellen, was die Netzwerkleistung verbessert.\\
+\underline{Nachteil:} Die Unterteilung von Netzen in Subnetze kann zu einem erhöhten Verwaltungsaufwand führen, insbesondere wenn viele Subnetze eingerichtet werden müssen. \\
+Es erfordert sorgfältige Planung und Konfiguration, um sicherzustellen, dass die Subnetze angemessen dimensioniert sind und dass die Routing- und Subnetzmasken korrekt konfiguriert sind.
+\subsection*{2.)}
+1.0.0.0/31
+
+\section*{Aufgabe 2.4}
+\subsection*{1.)}
+Um die Netzwerk-ID des Subnetzes zu bestimmen, müssen wir die Subnetzmaske aus der CIDR-Notation extrahieren und dann die Bitweise UND-Operation auf die IP-Adresse und die Subnetzmaske anwenden. \\
+Die gegebene IP-Adresse: 10.0.13.42/17\\
+Die Subnetzmaske für /17 in binärer Form: 11111111.11111111.10000000.00000000 (oder 255.255.128.0 in dezimaler Form)\\
+IP-Adresse:  \tab   00001010.00000000.00001101.00101010 \\
+Subnetzmaske: \tab   11111111.11111111.10000000.00000000 \\
+-------------------------------------------------   \\
+Netzwerk-ID:   \tab  00001010.00000000.00000000.00000000
+
+\subsection*{2.)}
+Um die Anzahl der nutzbaren IP-Adressen in diesem Subnetz zu bestimmen, müssen wir die Anzahl der Hostbits berechnen. Da die Subnetzmaske /17 ist, bleiben 15 Bits für Hostadressen übrig (32 - 17 = 15).\\
+Die Anzahl der nutzbaren IP-Adressen berechnet sich durch $2^{15} -2$, da die erste Adresse für das Netzwerk und die letzte Adresse für den Broadcast reserviert sind.\\
+Anzahl der nutzbaren IP-Adressen = $2^{15} - 2 = 32766$ \\
+Die erste nutzbare IP-Adresse ist die Netzwerk-ID plus 1 und die letzte nutzbare IP-Adresse ist die Broadcast-Adresse minus 1.\\
+Erste nutzbare IP-Adresse: 10.0.0.1\\
+Letzte nutzbare IP-Adresse: 10.0.127.254
+\subsection*{3.)}
+Ja, Hosts mit den IP-Adressen 10.0.48.32/17 und 10.0.13.42/17 können kommunizieren, da sie sich im gleichen Subnetz befinden. Die Subnetzmaske (/17) definiert das Subnetz, und beide Hosts haben die gleiche Netzwerk-ID (10.0.0.0), was bedeutet, dass sie sich im selben Subnetz befinden und daher direkt miteinander kommunizieren können.
+\subsection*{4.)}
+Nein, Hosts mit den IP-Adressen 10.67.87.54/17 und 10.0.13.42/17 können nicht kommunizieren, da sie sich in unterschiedlichen Subnetzen befinden. Um die Kommunikation zu ermöglichen, müsste eine Router-Komponente im Netzwerk vorhanden sein, die Routingfunktionen zwischen den Subnetzen durchführt.
+
+\section*{Aufgabe 2.4}
+\subsection*{1.)}
+5.45.105.247
+\subsection*{2.)}
+10.0.0.0/8, da ansonsten nur weniger als 4 subnetze erzeugt werden können da die Subnetzmaske 255.192.0.0 ist
+\subsection*{3.)}
+\end{document}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
