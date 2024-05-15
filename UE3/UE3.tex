@@ -1,0 +1,303 @@
+% ----------------------- TODO ---------------------------
+% Diese Daten müssen pro Blatt angepasst werden:
+\newcommand{\NUMBER}{3}
+\newcommand{\EXERCISES}{3}
+% Diese Daten müssen einmalig pro Vorlesung angepasst werden:
+\newcommand{\COURSE}{Grundlagen des Internets}
+\newcommand{\TUTOR}{}
+\newcommand{\STUDENTA}{Moritz Hahn}
+\newcommand{\STUDENTB}{Sarah Altenkrüger}
+\newcommand{\STUDENTC}{}
+\newcommand{\DEADLINE}{13.05.2024}
+% ----------------------- TODO ---------------------------
+
+\documentclass[a4paper]{scrartcl}
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{lastpage}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{pdflscape}
+\usepackage{subfigure}
+\usepackage{float}
+\usepackage{polynom}
+\usepackage{hyperref}
+\usepackage{tabularx}
+\usepackage{forloop}
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage{fancybox}
+\usepackage{tikz}
+
+%Größe der Ränder setzen
+\geometry{a4paper,left=3cm, right=3cm, top=3cm, bottom=3cm}
+
+%Kopf- und Fußzeile
+\pagestyle {fancy}
+\fancyhead[L]{Tutor: \TUTOR}
+\fancyhead[C]{\COURSE}
+\fancyhead[R]{\today}
+
+\fancyfoot[L]{}
+\fancyfoot[C]{} 
+\fancyfoot[R]{Seite \thepage /\pageref*{LastPage}}
+
+%Formatierung der Überschrift, hier nichts ändern
+\def\header#1#2{
+  \begin{center}
+    {\Large Übungsblatt #1}\\
+    {(Abgabetermin #2)}
+  \end{center}
+}
+
+%Definition der Punktetabelle, hier nichts ändern
+\newcounter{punktelistectr}
+\newcounter{punkte}
+\newcommand{\punkteliste}[2]{%
+  \setcounter{punkte}{#2}%
+  \addtocounter{punkte}{-#1}%
+  \stepcounter{punkte}%<-- also punkte = m-n+1 = Anzahl Spalten[1]
+  \begin{center}%
+  \begin{tabularx}{\linewidth}[]{@{}*{\thepunkte}{>{\centering\arraybackslash} X|}@{}>{\centering\arraybackslash}X}
+      \forloop{punktelistectr}{#1}{\value{punktelistectr} < #2 } %
+      {%
+        \thepunktelistectr &
+      }
+      #2 &  $\Sigma$ \\
+      \hline
+      \forloop{punktelistectr}{#1}{\value{punktelistectr} < #2 } %
+      {%
+        &
+      } &\\
+      \forloop{punktelistectr}{#1}{\value{punktelistectr} < #2 } %
+      {%
+        &
+      } &\\
+    \end{tabularx}
+  \end{center}
+}
+
+\begin{document}
+
+\begin{tabularx}{\linewidth}{m{0.2 \linewidth}X}
+  \begin{minipage}{\linewidth}
+    \STUDENTA\\
+    \STUDENTB\\
+    \STUDENTC
+  \end{minipage} & \begin{minipage}{\linewidth}
+    \punkteliste{1}{\EXERCISES}
+  \end{minipage}\\
+\end{tabularx}
+
+\header{Nr. \NUMBER}{\DEADLINE}
+
+
+
+% ----------------------- TODO ---------------------------
+% Hier werden die Aufgaben/Lösungen eingetragen:
+
+\section*{Aufgabe 3.1}
+
+\begin{table}[!htb]
+\centering
+\caption{R1}
+\label{tab:my-table}
+\begin{tabular}{|l|l|l|}
+\hline
+Prefix    & Gateway       & Interface \\ \hline
+10.0.8/21 & 134.2.0.2     & IF0       \\ \hline
+10/8      & 134.2.0.3     & IF0       \\ \hline
+0/0       & 134.2.255.254 & IF1       \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[!htb]
+\centering
+\caption{R2}
+\label{tab:my-table}
+\begin{tabular}{|l|l|l|}
+\hline
+Prefix       & Gateway       & Interface \\ \hline
+192.168.0/24 & 134.2.0.1     & IF0       \\ \hline
+10/8         & 134.2.0.3     & IF0       \\ \hline
+0/0          & 134.2.255.254 & IF1       \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[!htb]
+\centering
+\caption{R3}
+\label{tab:my-table}
+\begin{tabular}{|l|l|l|}
+\hline
+Prefix       & Gateway       & Interface \\ \hline
+192.168.0/24 & 134.2.0.1     & IF0       \\ \hline
+10.0.8/21    & 134.2.0.2     & IF0       \\ \hline
+0/0          & 134.2.255.254 & IF1       \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[!htb]
+\centering
+\caption{A}
+\label{tab:my-table}
+\begin{tabular}{|l|l|l|}
+\hline
+Prefix       & Gateway       & Interface \\ \hline
+192.168.0/24 & 192.168.0.254 & IF0       \\ \hline
+10.0.8/21    & 192.168.0.254 & IF0       \\ \hline
+10/8         & 192.168.0.254 & IF0       \\ \hline
+0/0          & 192.168.0.254 & IF1       \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[]
+\centering
+\caption{B}
+\label{tab:my-table}
+\begin{tabular}{|l|l|l|}
+\hline
+Prefix       & Gateway       & Interface \\ \hline
+192.168.0/24 & 192.168.0.254 & IF0       \\ \hline
+10.0.8/21    & 192.168.0.254 & IF0       \\ \hline
+10/8         & 192.168.0.254 & IF0       \\ \hline
+0/0          & 192.168.0.254 & IF1       \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[]
+\centering
+\caption{C}
+\label{tab:my-table}
+\begin{tabular}{|l|l|l|}
+\hline
+Prefix       & Gateway  & Interface \\ \hline
+192.168.0/24 & 10.0.8.1 & IF0       \\ \hline
+10.0.8/21    & 10.0.8.1 & IF0       \\ \hline
+10/8         & 10.0.8.1 & IF0       \\ \hline
+0/0          & 10.0.8.1 & IF1       \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[]
+\centering
+\caption{D}
+\label{tab:my-table}
+\begin{tabular}{|l|l|l|}
+\hline
+Prefix       & Gateway  & Interface \\ \hline
+192.168.0/24 & 10.0.8.1 & IF0       \\ \hline
+10.0.8/21    & 10.0.8.1 & IF0       \\ \hline
+10/8         & 10.0.8.1 & IF0       \\ \hline
+0/0          & 10.0.8.1 & IF1       \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[]
+\centering
+\caption{E}
+\label{tab:my-table}
+\begin{tabular}{|l|l|l|}
+\hline
+Prefix       & Gateway    & Interface \\ \hline
+192.168.0/24 & 10.0.0.254 & IF0       \\ \hline
+10.0.8/21    & 10.0.0.254 & IF0       \\ \hline
+10/8         & 10.0.0.254 & IF0       \\ \hline
+0/0          & 10.0.0.254 & IF1       \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[]
+\centering
+\caption{F}
+\label{tab:my-table}
+\begin{tabular}{|l|l|l|}
+\hline
+Prefix       & Gateway    & Interface \\ \hline
+192.168.0/24 & 10.0.0.254 & IF0       \\ \hline
+10.0.8/21    & 10.0.0.254 & IF0       \\ \hline
+10/8         & 10.0.0.254 & IF0       \\ \hline
+0/0          & 10.0.0.254 & IF1       \\ \hline
+\end{tabular}
+\end{table}
+\newpage
+\section*{Aufgabe 3.2}
+\subsection*{1.)}
+Nein, da nur bei einer übertragung von Host B zu Host A nie die Maximale Packet größe erreicht werden kann, da die MTU von Host B kleiner ist als Die MTU des WIFI's. \\
+Bei der Übertragung von Host A zu Host B, kann die maximale MTU des WIFI's überschritten werden, da die MTU von Host a größer als die MTU des WIFI's ist. Somit muss das Packet fragmentiert werden
+\subsection*{2.)}
+\begin{table}[htbp]
+\centering
+\caption{Fragmentierungstabelle}
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Fragment Nummer} & \textbf{Payload} & \textbf{Fragmentlänge} & \textbf{Fragment Offset} & \textbf{MF-Bit} \\
+    \hline
+    1 & 1480 & 1500 & 0 & 1 \\
+    2 & 1480 & 1500 & 185 & 1 \\
+    3 & 1480 & 1500 & 370 & 1 \\
+    4 & 912 & 944 & 555 & 0 \\
+    \hline
+\end{tabular}
+\label{tab:fragmentierung}
+\end{table}
+\subsection*{3.)}
+Die Verwendung des Fragment Offsets anstelle einer Fragment-Nummer zur Identifizierung der einzelnen Fragmente bietet mehrere Vorteile:
+
+\begin{enumerate}
+    \item \textbf{Flexibilität bei der Reihenfolge:} Da Fragmentierung nicht garantiert in der gleichen Reihenfolge erfolgt, wie das ursprüngliche Paket aufgeteilt wurde, ermöglicht der Fragment Offset die ordnungsgemäße Rekonstruktion des Pakets, unabhängig von der Reihenfolge, in der die Fragmente empfangen werden. Dies bedeutet, dass Fragmente in beliebiger Reihenfolge empfangen werden können, solange der Fragment Offset korrekt ist.
+    
+    \item \textbf{Effizienz bei der Pufferung:} Wenn Fragmente eines Pakets durch das Netzwerk geleitet werden, können sie in verschiedenen Routern unterschiedliche Wege nehmen und daher in unterschiedlicher Reihenfolge ankommen. Durch die Verwendung des Fragment Offsets anstelle einer festen Fragment-Nummer können Router und Empfänger effizienter Puffer verwenden, da die Fragmente nicht zwangsläufig in aufsteigender Reihenfolge angekommen müssen, um korrekt verarbeitet zu werden.
+    
+\end{enumerate}
+\section*{Aufgabe 3.3}
+\subsection*{1.)}
+Ein ARP-Request besteht aus den folgenden Feldern:
+
+\begin{itemize}
+    \item Hardwaretyp: Gibt den Typ der verwendeten Hardware an (z.B. Ethernet).
+    \item Protokolltyp: Gibt den Typ des verwendeten Netzwerkprotokolls an (z.B. IPv4).
+    \item Hardwareadresslänge: Gibt die Länge der Hardwareadresse an (z.B. für Ethernet 6 Bytes).
+    \item Protokolladresslänge: Gibt die Länge der Protokolladresse an (z.B. für IPv4 4 Bytes).
+    \item Operation: Gibt an, ob es sich um eine Anfrage (Request) oder eine Antwort (Reply) handelt.
+    \item Absender-Hardwareadresse: Die MAC-Adresse des Absenders.
+    \item Absender-Protokolladresse: Die IP-Adresse des Absenders.
+    \item Ziel-Hardwareadresse: In einem ARP-Request ist dies oft die Broadcast-Adresse (alle Geräte im Netzwerk), da der Absender die Hardwareadresse eines bestimmten Ziels anfordert.
+    \item Ziel-Protokolladresse: Die IP-Adresse des Ziels, dessen Hardwareadresse angefragt wird.
+\end{itemize}
+
+\subsection*{2.)}
+Ein ARP-Reply hat die gleichen Felder wie ein ARP-Request, aber die Operation gibt an, dass es sich um eine Antwort handelt. Die Absender-Hardwareadresse und -Protokolladresse sind die des antwortenden Geräts, während die Ziel-Hardwareadresse die des Anfragenden ist und die Ziel-Protokolladresse die des Absenders des ursprünglichen ARP-Requests ist.
+
+\subsection*{3.)}
+
+ARP-Requests werden normalerweise mit einer Broadcast-Zieladresse gesendet, damit alle Geräte im Netzwerk sie empfangen können. ARP-Replies werden dagegen an die spezifische MAC-Adresse des anfragenden Geräts gesendet, die im ARP-Request enthalten ist. Dies reduziert die Netzwerklast und sorgt dafür, dass nur das anfragende Gerät die Antwort empfängt.
+
+\subsection*{4.)}
+ARP ist anfällig für verschiedene Arten von Angriffen wie ARP Spoofing oder ARP Poisoning, bei denen ein Angreifer ARP-Pakete manipuliert, um falsche Zuordnungen zwischen IP-Adressen und MAC-Adressen vorzutäuschen. Dies kann zu Man-in-the-Middle-Angriffen führen, bei denen ein Angreifer den Datenverkehr zwischen zwei Kommunikationspartnern abhört oder sogar manipuliert. Daher kann die Funktionsweise von ARP ein Sicherheitsrisiko darstellen, insbesondere in ungesicherten Netzwerken.
+
+\subsection*{5.)}
+
+Nein, C muss keinen eigenen ARP-Request verschicken. Wenn A einen ARP-Request an B sendet, um dessen MAC-Adresse zu ermitteln, wird dieser Request von allen Hosts im Netzwerk gehört, einschließlich C. Dadurch wird die ARP-Tabelle von C automatisch aktualisiert, sodass C die MAC-Adresse von A kennt, sobald der ARP-Request und die entsprechende Antwort empfangen wurden. Daher muss C keinen eigenen ARP-Request senden, um mit A zu kommunizieren.
+
+\subsection*{6.)}
+
+Um den angestrebten Paketversand sowohl für A als auch für C zu ermöglichen, müssen mindestens zwei ARP-Pakete verschickt werden:
+
+\begin{itemize}
+  \item A sendet einen ARP-Request, um die MAC-Adresse von B zu ermitteln.
+  \item B antwortet mit einem ARP-Reply und sendet seine MAC-Adresse an A.
+  \item C hört den ARP-Request und erhält dadurch auch die MAC-Adresse von A, ohne einen eigenen ARP-Request senden zu müssen.
+\end{itemize}
+
+\end{document}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
