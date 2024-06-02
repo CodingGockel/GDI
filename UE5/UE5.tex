@@ -1,0 +1,292 @@
+% ----------------------- TODO ---------------------------
+% Diese Daten müssen pro Blatt angepasst werden:
+\newcommand{\NUMBER}{5}
+\newcommand{\EXERCISES}{2}
+% Diese Daten müssen einmalig pro Vorlesung angepasst werden:
+\newcommand{\COURSE}{Grundlagen des Internets}
+\newcommand{\TUTOR}{}
+\newcommand{\STUDENTA}{Moritz Hahn}
+\newcommand{\STUDENTB}{Sarah Altenkrüger}
+\newcommand{\STUDENTC}{}
+\newcommand{\DEADLINE}{14.05.2024}
+% ----------------------- TODO ---------------------------
+
+\documentclass[a4paper]{scrartcl}
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{lastpage}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{pdflscape}
+\usepackage{subfigure}
+\usepackage{float}
+\usepackage{polynom}
+\usepackage{hyperref}
+\usepackage{tabularx}
+\usepackage{forloop}
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage{fancybox}
+\usepackage{tikz}
+
+%Größe der Ränder setzen
+\geometry{a4paper,left=3cm, right=3cm, top=3cm, bottom=3cm}
+
+%Kopf- und Fußzeile
+\pagestyle {fancy}
+\fancyhead[L]{Tutor: \TUTOR}
+\fancyhead[C]{\COURSE}
+\fancyhead[R]{\today}
+
+\fancyfoot[L]{}
+\fancyfoot[C]{} 
+\fancyfoot[R]{Seite \thepage /\pageref*{LastPage}}
+
+%Formatierung der Überschrift, hier nichts ändern
+\def\header#1#2{
+  \begin{center}
+    {\Large Übungsblatt #1}\\
+    {(Abgabetermin #2)}
+  \end{center}
+}
+
+%Definition der Punktetabelle, hier nichts ändern
+\newcounter{punktelistectr}
+\newcounter{punkte}
+\newcommand{\punkteliste}[2]{%
+  \setcounter{punkte}{#2}%
+  \addtocounter{punkte}{-#1}%
+  \stepcounter{punkte}%<-- also punkte = m-n+1 = Anzahl Spalten[1]
+  \begin{center}%
+  \begin{tabularx}{\linewidth}[]{@{}*{\thepunkte}{>{\centering\arraybackslash} X|}@{}>{\centering\arraybackslash}X}
+      \forloop{punktelistectr}{#1}{\value{punktelistectr} < #2 } %
+      {%
+        \thepunktelistectr &
+      }
+      #2 &  $\Sigma$ \\
+      \hline
+      \forloop{punktelistectr}{#1}{\value{punktelistectr} < #2 } %
+      {%
+        &
+      } &\\
+      \forloop{punktelistectr}{#1}{\value{punktelistectr} < #2 } %
+      {%
+        &
+      } &\\
+    \end{tabularx}
+  \end{center}
+}
+
+\begin{document}
+
+\begin{tabularx}{\linewidth}{m{0.2 \linewidth}X}
+  \begin{minipage}{\linewidth}
+    \STUDENTA\\
+    \STUDENTB\\
+    \STUDENTC
+  \end{minipage} & \begin{minipage}{\linewidth}
+    \punkteliste{1}{\EXERCISES}
+  \end{minipage}\\
+\end{tabularx}
+
+\header{Nr. \NUMBER}{\DEADLINE}
+
+
+
+% ----------------------- TODO ---------------------------
+% Hier werden die Aufgaben/Lösungen eingetragen:
+
+\section*{Aufgabe 5.1}
+\subsection*{1.}
+\textbf{RIP (Routing Information Protocol)} \\
+RIP ist ein Beispiel für einen \textit{decentralized routing algorithm}. RIP arbeitet nach dem Distance-Vector-Verfahren, bei dem jeder Router nur Informationen von seinen direkten Nachbarn erhält und diese Informationen weiterverbreitet. Jeder Router kennt also nur die Distanzen zu seinen direkten Nachbarn und die Distanzen, die diese Nachbarn zu anderen Zielen haben. Es gibt keine zentrale oder vollständige Kenntnis des gesamten Netzwerks.
+
+\textbf{OSPF (Open Shortest Path First)} \\
+OSPF ist ein \textit{global routing algorithm}. Es verwendet das Link-State-Verfahren, bei dem jeder Router Informationen über den Zustand aller Links im Netzwerk sammelt und diese Informationen an alle anderen Router im Netzwerk weitergibt. Jeder Router hat dadurch eine vollständige und aktuelle Übersicht über die gesamte Netzwerkstruktur und kann mit dem Dijkstra-Algorithmus die kürzesten Pfade berechnen.
+\subsection*{2.}
+\textbf{Anzahl der Iterationen} \\
+Der Dijkstra-Algorithmus benötigt \( n \) Iterationen, wobei \( n \) die Anzahl der Knoten im Netzwerk ist. In jeder Iteration wird ein neuer Knoten mit dem aktuell bekannten kürzesten Pfad zu diesem Knoten als "besucht" markiert.
+
+\textbf{Pseudocode des Dijkstra-Algorithmus}
+
+\begin{verbatim}
+function Dijkstra(Graph, source):\\
+    dist[source] := 0
+    for each vertex v in Graph:
+        if v != source:
+            dist[v] := infinity
+        previous[v] := undefined
+    S := empty set
+    Q := set of all vertices in Graph
+    
+    while Q is not empty:
+        u := vertex in Q with smallest dist[u]
+        remove u from Q
+        add u to S
+        
+        for each neighbor v of u:
+            if v in Q:
+                alt := dist[u] + length(u, v)
+                if alt < dist[v]:
+                    dist[v] := alt
+                    previous[v] := u
+                    
+    return dist, previous
+  \end{verbatim}
+\subsection*{3.}
+Der Dijkstra-Algorithmus funktioniert \textbf{nicht} korrekt mit negativen Kantengewichten. Der Grund dafür ist, dass der Algorithmus darauf basiert, dass die kürzeste bekannte Distanz zu einem Knoten nie verbessert wird, nachdem dieser Knoten als "besucht" markiert wurde. Bei negativen Kantengewichten könnte es jedoch passieren, dass eine kürzere Verbindung zu einem Knoten gefunden wird, nachdem der Knoten bereits als besucht markiert wurde, was zu falschen Ergebnissen führen würde. In solchen Fällen eignet sich der Bellman-Ford-Algorithmus besser, da er auch negative Kantengewichte korrekt verarbeiten kann.
+\subsection*{4.}
+\begin{table}[htbp]
+  \centering
+  \resizebox{\textwidth}{!}{%
+      \begin{tabular}{|c|c|c|}
+      \hline
+      \textbf{Schritt} & \textbf{Confirmed} & \textbf{Tentative} \\ \hline
+      1 & (A, 0, -) & \{(B, 2, B), (C, 1, C)\} \\ \hline
+      2 & (C, 1, C) & \{(B, 2, B), (E, 5, C)\} \\ \hline
+      3 & (B, 2, B) & \{(D, 6.5, E), (E, 5, C), (F, 3, C)\} \\ \hline
+      4 & (F, 3, C) & \{(D, 6.5, E), (E, 5, C), (G, 8.5, D)\} \\ \hline
+      5 & (D, 6.5, E) & \{(E, 5, C), (G, 8.5, D), (H, 11, E)\} \\ \hline
+      6 & (E, 5, C) & \{(G, 8.5, D), (H, 11, E), (I, 10.5, E)\} \\ \hline
+      7 & (G, 8.5, D) & \{(H, 11, E), (I, 10.5, E)\} \\ \hline
+      8 & (I, 10.5, E) & \{(H, 11, E)\} \\ \hline
+      9 & (H, 11, E) & - \\ \hline
+      \end{tabular}%
+  }
+  
+\end{table}
+
+\section*{Aufgabe 5.2}
+\subsection*{1.}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+Knoten & A & B & C & D & E & F & G & H \\
+\hline
+B & 3 & 0 & 3 & 8 & 1 & 7 & 3 & 2 \\
+\hline
+C & 2 & 1 & 0 & 3 & 4 & 2 & 2 & 1 \\
+\hline
+D & 1 & 4 & 2 & 0 & 6 & 4 & 3 & 6 \\
+\hline
+\end{tabular}
+
+\subsection*{Link-Kosten von A zu seinen Nachbarn}
+
+\begin{itemize}
+    \item A zu B: 2
+    \item A zu C: 5
+    \item A zu D: 1
+\end{itemize}
+
+\subsection*{Berechnung der Pfadkosten von A zu den Zielknoten B bis H}
+
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+Ziel & Über B (Kosten) & Über C (Kosten) & Über D (Kosten) & Günstigster Pfad \\
+\hline
+B & 2 + 0 = 2 & 5 + 1 = 6 & 1 + 4 = 5 & 2 (B) \\
+\hline
+C & 2 + 3 = 5 & 5 + 0 = 5 & 1 + 2 = 3 & 3 (D) \\
+\hline
+D & 2 + 8 = 10 & 5 + 3 = 8 & 1 + 0 = 1 & 1 (D) \\
+\hline
+E & 2 + 1 = 3 & 5 + 4 = 9 & 1 + 6 = 7 & 3 (B) \\
+\hline
+F & 2 + 7 = 9 & 5 + 2 = 7 & 1 + 4 = 5 & 5 (D) \\
+\hline
+G & 2 + 3 = 5 & 5 + 2 = 7 & 1 + 3 = 4 & 4 (D) \\
+\hline
+H & 2 + 2 = 4 & 5 + 1 = 6 & 1 + 6 = 7 & 4 (B) \\
+\hline
+\end{tabular}
+
+\subsection*{Routing-Tabelle für Knoten A}
+
+\begin{tabular}{|c|c|c|}
+\hline
+Ziel & Kosten & Next-Hop \\
+\hline
+B & 2 & B \\
+\hline
+C & 3 & D \\
+\hline
+D & 1 & D \\
+\hline
+E & 3 & B \\
+\hline
+F & 5 & D \\
+\hline
+G & 4 & D \\
+\hline
+H & 4 & B \\
+\hline
+\end{tabular}
+
+\subsection*{2.}
+
+Nach einem Linkausfall zwischen A und D aktualisiert Knoten A seine Distanzvektoren und sendet diese an seine Nachbarn B und C. Angenommen, das Update von A erreicht B früher als C. Knoten B berechnet daraufhin seine neue Routing-Tabelle und sendet einen aktualisierten Distanzvektor an C. Wenn das Update von B den Knoten C früher erreicht als das Update von A, entsteht ein Problem.
+
+\subsection*{Ablauf}
+
+\begin{enumerate}
+    \item \textbf{Linkausfall und Update von A}:
+    \begin{itemize}
+        \item Der Link zwischen A und D fällt aus.
+        \item A sendet den neuen Distanzvektor an B und C: [0, 1, 1, $\infty$].
+    \end{itemize}
+    \item \textbf{B empfängt das Update von A zuerst}:
+    \begin{itemize}
+        \item B aktualisiert seine Routing-Tabelle:
+        \begin{itemize}
+            \item Zu D: der aktuelle kürzeste Pfad war über A (Kosten 2). Jetzt wird der neue Pfad von B über C zu D in Betracht gezogen.
+            \item Die Kosten von B zu D könnten jetzt \(1 (B \to C) + 1 (C \to D) = 2\) sein (obwohl C das Update noch nicht erhalten hat).
+        \end{itemize}
+        \item B sendet seinen neuen Distanzvektor an C.
+    \end{itemize}
+    \item \textbf{C empfängt das Update von B vor dem Update von A}:
+    \begin{itemize}
+        \item C sieht, dass B noch denkt, dass der Pfad zu D existiert (Kosten 2).
+        \item C nimmt an, dass es über B immer noch einen Pfad zu D gibt.
+        \item C aktualisiert seine Routing-Tabelle, wobei der Pfad zu D über B geführt wird und setzt die Kosten zu D auf 3 (eigentlich unendliche Kosten).
+        \item C sendet seinen neuen Distanzvektor an seine Nachbarn (einschließlich A und B).
+    \end{itemize}
+    \item \textbf{C empfängt das Update von A}:
+    \begin{itemize}
+        \item C sieht nun, dass der direkte Pfad zu D von A auf unendlich gesetzt wurde, aber dies hat keine sofortige Wirkung, da C bereits die falsche Information von B erhalten hat.
+        \item Dieser Prozess wiederholt sich, wobei jeder Knoten immer wieder den Pfadkostenwert zu D erhöht, während sie auf die neue korrekte Information warten.
+    \end{itemize}
+\end{enumerate}
+
+\subsection*{Count-To-Infinity-Problem}
+
+Das oben beschriebene Szenario führt zum sogenannten \textbf{Count-To-Infinity-Problem}. Dies tritt auf, weil Routing-Updates nicht synchron und gleichzeitig an alle Knoten gesendet werden und Knoten fälschlicherweise annehmen, dass alternative Pfade existieren, obwohl diese in Wirklichkeit nicht mehr vorhanden sind. Jeder Knoten zählt den Abstand zu einem nicht erreichbaren Zielknoten immer weiter hoch (bis zur Unendlichkeit).
+
+Das Problem wird „Count-To-Infinity“ genannt, weil die Knoten die Distanz zu einem nicht erreichbaren Knoten immer weiter erhöhen. Da es keine klare Definition von „Unendlichkeit“ in Routing-Tabellen gibt, ist eine Obergrenze für solche Zählungen oft ein großer Wert (z.B. 16 in RIP), ab welchem der Knoten erkennt, dass der Zielknoten unerreichbar ist.
+
+\subsection*{Lösungsmöglichkeiten}
+
+Um das Count-To-Infinity-Problem zu vermeiden, gibt es verschiedene Ansätze:
+\begin{itemize}
+    \item \textbf{Split Horizon}: Ein Router sendet keine Routing-Informationen über einen bestimmten Pfad zurück zu dem Router, von dem er diese Information erhalten hat.
+    \item \textbf{Poison Reverse}: Erweiterung des Split Horizon, bei dem eine Routing-Information explizit als unendlich markiert wird.
+    \item \textbf{Triggered Updates}: Sofortige Updates bei Veränderungen.
+    \item \textbf{Holddown Timer}: Verzögerung von Updates, um zu verhindern, dass falsche Informationen verbreitet werden.
+\end{itemize}
+
+Diese Mechanismen helfen, das Count-To-Infinity-Problem zu vermeiden, indem sie verhindern, dass falsche oder veraltete Informationen das Netzwerk destabilisieren.
+
+
+
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
