@@ -1,0 +1,395 @@
+% ----------------------- TODO ---------------------------
+% Diese Daten müssen pro Blatt angepasst werden:
+\newcommand{\NUMBER}{6}
+\newcommand{\EXERCISES}{2}
+% Diese Daten müssen einmalig pro Vorlesung angepasst werden:
+\newcommand{\COURSE}{Grundlagen des Internets}
+\newcommand{\TUTOR}{}
+\newcommand{\STUDENTA}{Moritz Hahn}
+\newcommand{\STUDENTB}{Sarah Altenkrüger}
+\newcommand{\STUDENTC}{}
+\newcommand{\DEADLINE}{03.06.2024}
+% ----------------------- TODO ---------------------------
+
+\documentclass[a4paper]{scrartcl}
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{lastpage}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{pdflscape}
+\usepackage{subfigure}
+\usepackage{float}
+\usepackage{polynom}
+\usepackage{hyperref}
+\usepackage{tabularx}
+\usepackage{forloop}
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage{fancybox}
+\usepackage{tikz}
+\usepackage{comment}
+%Größe der Ränder setzen
+\geometry{a4paper,left=3cm, right=3cm, top=3cm, bottom=3cm}
+
+%Kopf- und Fußzeile
+\pagestyle {fancy}
+\fancyhead[L]{Tutor: \TUTOR}
+\fancyhead[C]{\COURSE}
+\fancyhead[R]{\today}
+
+\fancyfoot[L]{}
+\fancyfoot[C]{} 
+\fancyfoot[R]{Seite \thepage /\pageref*{LastPage}}
+
+%Formatierung der Überschrift, hier nichts ändern
+\def\header#1#2{
+  \begin{center}
+    {\Large Übungsblatt #1}\\
+    {(Abgabetermin #2)}
+  \end{center}
+}
+
+%Definition der Punktetabelle, hier nichts ändern
+\newcounter{punktelistectr}
+\newcounter{punkte}
+\newcommand{\punkteliste}[2]{%
+  \setcounter{punkte}{#2}%
+  \addtocounter{punkte}{-#1}%
+  \stepcounter{punkte}%<-- also punkte = m-n+1 = Anzahl Spalten[1]
+  \begin{center}%
+  \begin{tabularx}{\linewidth}[]{@{}*{\thepunkte}{>{\centering\arraybackslash} X|}@{}>{\centering\arraybackslash}X}
+      \forloop{punktelistectr}{#1}{\value{punktelistectr} < #2 } %
+      {%
+        \thepunktelistectr &
+      }
+      #2 &  $\Sigma$ \\
+      \hline
+      \forloop{punktelistectr}{#1}{\value{punktelistectr} < #2 } %
+      {%
+        &
+      } &\\
+      \forloop{punktelistectr}{#1}{\value{punktelistectr} < #2 } %
+      {%
+        &
+      } &\\
+    \end{tabularx}
+  \end{center}
+}
+
+\begin{document}
+
+\begin{tabularx}{\linewidth}{m{0.2 \linewidth}X}
+  \begin{minipage}{\linewidth}
+    \STUDENTA\\
+    \STUDENTB\\
+    \STUDENTC
+  \end{minipage} & \begin{minipage}{\linewidth}
+    \punkteliste{1}{\EXERCISES}
+  \end{minipage}\\
+\end{tabularx}
+
+\begin{comment}
+Autonomes system 1 (AS1):
+1a-1c
+1a-1d über IF1
+1a-1b
+1d-1b über IF2
+1c-3a
+1b-2a
+
+Autonomes System 2 (AS2):
+2a-1b
+2a-2c
+2a-2b
+2b-2c
+2c-4a
+
+Autonomes System 3 (AS3):
+3a-1c
+3a-3b
+3a-3c
+3b-3c
+3c-4c
+
+Autonomes System 4 (AS4):
+4c-3c
+4c-4b
+4b-4a
+4a-2c
+4a-X
+
+Autonomes system 1 (AS1):
+R1-R2
+R1-134.0.0.0/8
+
+Autonomes System 2 (AS2):
+R2-R1 
+R2-R5
+R2-R3
+
+Autonomes System 3 (AS3):
+R3-R2
+R3-R5
+R3-R4
+
+Autonomes System 4 (AS4):
+R4-R3
+R4-R5
+
+Autonomes System 5 (AS5):
+R5-R4
+R5-R3
+R5-R2
+r5-R6
+
+Autonomes System 6 (AS6):
+R6-R5
+\end{comment}
+\header{Nr. \NUMBER}{\DEADLINE}
+
+
+
+% ----------------------- TODO ---------------------------
+% Hier werden die Aufgaben/Lösungen eingetragen:
+
+\section*{Aufgabe 6.1}
+\subsection*{1.}
+Zunächst betrachten wir, wie sich die Information über das Präfix \( x \) verbreitet:
+
+\begin{itemize}
+    \item \textbf{Router 4a} in AS4 kennt das Präfix \( x \) und verteilt es über \textbf{RIP} innerhalb von AS4 zu \textbf{4b} und \textbf{4c}.
+    \item \textbf{Router 4c} in AS4 teilt die Information über \( x \) mit \textbf{Router 3c} in AS3 über \textbf{eBGP}.
+    \item \textbf{Router 3c} teilt die Information über \( x \) in AS3 über \textbf{iBGP} mit \textbf{3b} und \textbf{3a}.
+    \item \textbf{Router 3a} teilt die Information über \( x \) mit \textbf{1c} in AS1 über \textbf{eBGP}.
+    \item \textbf{Router 1c} teilt die Information über \( x \) in AS1 über \textbf{iBGP} mit \textbf{1d}.
+\end{itemize}
+
+Damit können wir die Frage beantworten:
+
+\begin{itemize}
+    \item \textbf{Router 1c}: erfährt die Information über \( x \) über \textbf{eBGP} (von \textbf{3a}).
+    \item \textbf{Router 3c}: erfährt die Information über \( x \) über \textbf{eBGP} (von \textbf{4c}).
+    \item \textbf{Router 1d}: erfährt die Information über \( x \) über \textbf{iBGP} (von \textbf{1c}).
+    \item \textbf{Router 3a}: erfährt die Information über \( x \) über \textbf{iBGP} (von \textbf{3c}).
+\end{itemize}
+\subsection*{2.}
+Um zu bestimmen, ob \( I \) auf IF1 oder IF2 gesetzt wird, müssen wir den Weg des Pakets von \textbf{1d} zum Präfix \( x \) verfolgen:
+
+\begin{itemize}
+    \item \textbf{Router 1d} erhält die Route zu \( x \) von \textbf{1c}.
+    \item \textbf{Router 1c} hat die Route zu \( x \) von \textbf{3a}.
+    \item Die Kommunikation zwischen \textbf{1c} und \textbf{3a} erfolgt über ihre direkte Verbindung.
+\end{itemize}
+
+Da der Weg vom Router \textbf{1d} zum Präfix \( x \) über den Router \textbf{1c} führt und die Verbindung von \textbf{1d} zu \textbf{1c} über das Interface IF1 läuft, wird \( I \) auf \textbf{IF1} gesetzt.
+
+\textbf{Begründung}: Da der nächste Hop für Router 1d, um das Präfix \( x \) zu erreichen, über Router 1c erfolgt und die Verbindung von 1d zu 1c über IF1 läuft, wird \( I \) auf IF1 gesetzt.
+
+\subsection*{3.}
+Mit der neuen Verbindung zwischen AS2 und AS4 (2c-4a) erhält \textbf{Router 1d} zwei verschiedene Routen zu \( x \): eine über AS3 und eine über AS2. 
+Welche Route \textbf{Router 1d} bevorzugt, hängt von den BGP-Pfadattributen ab, wie z.B. der Länge des AS-Pfads.
+
+\begin{itemize}
+    \item Der Pfad über AS3: 1d → 1c → 3a → 3c → 4c → 4a → \( x \)
+    \item Der Pfad über AS2: 1d → 1b → 2a → 2c → 4a → \( x \)
+\end{itemize}
+
+Da BGP standardmäßig den Pfad mit der geringsten AS-Pfadlänge bevorzugt und der Pfad über AS2 kürzer ist (2 AS-Hops gegenüber 3 AS-Hops über AS3), wird \textbf{Router 1d} den Pfad über AS2 wählen.
+
+Damit wird \( I \) auf \textbf{IF2} gesetzt, weil der Router 1d über 1b (und damit IF2) auf \( x \) zugreifen wird.
+
+\textbf{Begründung}: Da der Pfad über AS2 kürzer ist (weniger AS-Hops), wird \textbf{Router 1d} den Pfad über AS2 bevorzugen, und \( I \) wird auf IF2 gesetzt.
+
+\subsection*{4.}
+\begin{itemize}
+  \item Der Pfad über AS3: 1d → 1c → 3a → 3c → 4c → 4a → \( x \) (3 AS-Hops)
+  \item Der Pfad über AS2: 1d → 1b → 2a → 2c → 5a → 4a → \( x \) (4 AS-Hops)
+\end{itemize}
+
+Da BGP standardmäßig den Pfad mit der geringsten AS-Pfadlänge bevorzugt und der Pfad über AS3 kürzer ist (3 AS-Hops gegenüber 4 AS-Hops über AS2:AS5:AS4), wird \textbf{Router 1d} den Pfad über AS3 wählen.
+
+Damit wird \( I \) auf \textbf{IF1} gesetzt, weil der Router 1d über 1c (und damit IF1) auf \( x \) zugreifen wird.
+
+\textbf{Begründung}: Da der Pfad über AS3 kürzer ist (weniger AS-Hops), wird \textbf{Router 1d} den Pfad über AS3 bevorzugen, und \( I \) wird auf IF1 gesetzt.
+
+\section*{Aufgabe 6.2}
+\subsection*{1.}
+\subsection*{Runde 1:}
+
+\begin{itemize}
+    \item \textbf{R1 → R2:}
+    \begin{itemize}
+        \item \textbf{Announce:}
+        \begin{itemize}
+            \item Präfix: 134.0.0.0/8
+            \item NextHop: R1
+            \item ASPath: [AS1]
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Runde 2:}
+
+\begin{itemize}
+    \item \textbf{R2 → R5:}
+    \begin{itemize}
+        \item \textbf{Announce:}
+        \begin{itemize}
+            \item Präfix: 134.0.0.0/8
+            \item NextHop: R2
+            \item ASPath: [AS1, AS2]
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{R2 → R3:}
+    \begin{itemize}
+        \item \textbf{Announce:}
+        \begin{itemize}
+            \item Präfix: 134.0.0.0/8
+            \item NextHop: R2
+            \item ASPath: [AS1, AS2]
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Runde 3:}
+
+\begin{itemize}
+    \item \textbf{R5 → R3:}
+    \begin{itemize}
+        \item \textbf{Announce:}
+        \begin{itemize}
+            \item Präfix: 134.0.0.0/8
+            \item NextHop: R5
+            \item ASPath: [AS1, AS2, AS5]
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{R5 → R4:}
+    \begin{itemize}
+        \item \textbf{Announce:}
+        \begin{itemize}
+            \item Präfix: 134.0.0.0/8
+            \item NextHop: R5
+            \item ASPath: [AS1, AS2, AS5]
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{R5 → R6:}
+    \begin{itemize}
+        \item \textbf{Announce:}
+        \begin{itemize}
+            \item Präfix: 134.0.0.0/8
+            \item NextHop: R5
+            \item ASPath: [AS1, AS2, AS5]
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{R3 → R4:}
+    \begin{itemize}
+        \item \textbf{Announce:}
+        \begin{itemize}
+            \item Präfix: 134.0.0.0/8
+            \item NextHop: R3
+            \item ASPath: [AS1, AS2, AS3]
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Runde 4:}
+
+\begin{itemize}
+    \item \textbf{R4 → R5:}
+    \begin{itemize}
+        \item \textbf{Announce:}
+        \begin{itemize}
+            \item Präfix: 134.0.0.0/8
+            \item NextHop: R4
+            \item ASPath: [AS1, AS2, AS3, AS4]
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Zusammenfassung der Nachrichten:}
+
+\begin{itemize}
+    \item \textbf{Announce:}
+    \begin{itemize}
+        \item \textbf{Runde 1:} 1 Nachricht (R1 → R2)
+        \item \textbf{Runde 2:} 2 Nachrichten (R2 → R5, R2 → R3)
+        \item \textbf{Runde 3:} 4 Nachrichten (R5 → R3, R5 → R4, R5 → R6, R3 → R4)
+        \item \textbf{Runde 4:} 1 Nachricht (R4 → R5)
+    \end{itemize}
+\end{itemize}
+
+Insgesamt: 8 Announce-Nachrichten.
+
+\subsection*{2.}
+\subsection*{R5 kennt folgende Routen zum Präfix 134.0.0.0/8:}
+
+\begin{enumerate}
+    \item 134.0.0.0/8 über R2, ASPath: [AS1, AS2]
+    \item 134.0.0.0/8 über R3, ASPath: [AS1, AS2, AS3]
+    \item 134.0.0.0/8 über R4, ASPath: [AS1, AS2, AS3, AS4]
+\end{enumerate}
+
+\subsection*{R5 gibt folgende Route gegenüber R6 bekannt:}
+
+\begin{itemize}
+    \item \textbf{Präfix:} 134.0.0.0/8
+    \item \textbf{NextHop:} R5
+    \item \textbf{ASPath:} [AS1, AS2, AS5]
+\end{itemize}
+
+\textbf{Begründung:} R5 wählt die Route mit dem kürzesten ASPath, und bei gleich langen ASPaths die Route mit der kleinsten Router-ID (R2).
+
+\subsection*{3.}
+\begin{itemize}
+  \item \textbf{R2 sendet Withdraw-Nachrichten an R3:}
+  \begin{itemize}
+      \item \textbf{Withdraw:}
+      \begin{itemize}
+          \item Präfix: 134.0.0.0/8
+      \end{itemize}
+  \end{itemize}
+  \item \textbf{R5 sendet Withdraw-Nachrichten an R3, R4 und R6:}
+  \begin{itemize}
+      \item \textbf{Withdraw:}
+      \begin{itemize}
+          \item Präfix: 134.0.0.0/8
+      \end{itemize}
+  \end{itemize}
+\end{itemize}
+
+\subsection*{3.}
+\begin{itemize}
+  \item \textbf{R2 sendet Withdraw-Nachrichten an R5:}
+  \begin{itemize}
+      \item \textbf{Withdraw:}
+      \begin{itemize}
+          \item Präfix: 134.0.0.0/8
+      \end{itemize}
+  \end{itemize}
+  \item \textbf{R3 sendet Withdraw-Nachrichten an R5 und R4:}
+  \begin{itemize}
+      \item \textbf{Withdraw:}
+      \begin{itemize}
+          \item Präfix: 134.0.0.0/8
+      \end{itemize}
+  \end{itemize}
+  \item \textbf{R5 sendet Withdraw-Nachrichten an R6:}
+  \begin{itemize}
+      \item \textbf{Withdraw:}
+      \begin{itemize}
+          \item Präfix: 134.0.0.0/8
+      \end{itemize}
+  \end{itemize}
+\end{itemize}
+\end{document}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
