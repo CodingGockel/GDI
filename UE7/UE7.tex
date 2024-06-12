@@ -1,0 +1,333 @@
+% ----------------------- TODO ---------------------------
+% Diese Daten müssen pro Blatt angepasst werden:
+\newcommand{\NUMBER}{7}
+\newcommand{\EXERCISES}{3}
+% Diese Daten müssen einmalig pro Vorlesung angepasst werden:
+\newcommand{\COURSE}{Grundlagen des Internets}
+\newcommand{\TUTOR}{}
+\newcommand{\STUDENTA}{Moritz Hahn}
+\newcommand{\STUDENTB}{Sarah Altenkrüger}
+\newcommand{\STUDENTC}{}
+\newcommand{\DEADLINE}{10.06.2024}
+% ----------------------- TODO ---------------------------
+
+\documentclass[a4paper]{scrartcl}
+
+\usepackage{amsmath}
+\usepackage{tikz}
+
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{lastpage}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{pdflscape}
+\usepackage{subfigure}
+\usepackage{float}
+\usepackage{polynom}
+\usepackage{hyperref}
+\usepackage{tabularx}
+\usepackage{forloop}
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage{fancybox}
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning}
+%Größe der Ränder setzen
+\geometry{a4paper,left=3cm, right=3cm, top=3cm, bottom=3cm}
+
+%Kopf- und Fußzeile
+\pagestyle {fancy}
+\fancyhead[L]{Tutor: \TUTOR}
+\fancyhead[C]{\COURSE}
+\fancyhead[R]{\today}
+
+\fancyfoot[L]{}
+\fancyfoot[C]{} 
+\fancyfoot[R]{Seite \thepage /\pageref*{LastPage}}
+
+%Formatierung der Überschrift, hier nichts ändern
+\def\header#1#2{
+  \begin{center}
+    {\Large Übungsblatt #1}\\
+    {(Abgabetermin #2)}
+  \end{center}
+}
+
+%Definition der Punktetabelle, hier nichts ändern
+\newcounter{punktelistectr}
+\newcounter{punkte}
+\newcommand{\punkteliste}[2]{%
+  \setcounter{punkte}{#2}%
+  \addtocounter{punkte}{-#1}%
+  \stepcounter{punkte}%<-- also punkte = m-n+1 = Anzahl Spalten[1]
+  \begin{center}%
+  \begin{tabularx}{\linewidth}[]{@{}*{\thepunkte}{>{\centering\arraybackslash} X|}@{}>{\centering\arraybackslash}X}
+      \forloop{punktelistectr}{#1}{\value{punktelistectr} < #2 } %
+      {%
+        \thepunktelistectr &
+      }
+      #2 &  $\Sigma$ \\
+      \hline
+      \forloop{punktelistectr}{#1}{\value{punktelistectr} < #2 } %
+      {%
+        &
+      } &\\
+      \forloop{punktelistectr}{#1}{\value{punktelistectr} < #2 } %
+      {%
+        &
+      } &\\
+    \end{tabularx}
+  \end{center}
+}
+
+\begin{document}
+
+\begin{tabularx}{\linewidth}{m{0.2 \linewidth}X}
+  \begin{minipage}{\linewidth}
+    \STUDENTA\\
+    \STUDENTB\\
+    \STUDENTC
+  \end{minipage} & \begin{minipage}{\linewidth}
+    \punkteliste{1}{\EXERCISES}
+  \end{minipage}\\
+\end{tabularx}
+
+\header{Nr. \NUMBER}{\DEADLINE}
+
+
+
+% ----------------------- TODO ---------------------------
+% Hier werden die Aufgaben/Lösungen eingetragen:
+
+\section*{Aufgabe 7.1}
+\subsection*{1.}
+
+Die Übertragung von Daten direkt in IP-Paketen ist nicht ausreichend, da IP (Internet Protocol) selbst keine Mechanismen zur zuverlässigen Datenübertragung bietet. Hier sind einige Gründe dafür:
+
+\begin{itemize}
+    \item \textbf{Fehlende Zuverlässigkeit}: IP-Pakete können verloren gehen, dupliziert oder in falscher Reihenfolge ankommen. IP garantiert nicht, dass Pakete erfolgreich zugestellt werden.
+    \item \textbf{Keine Fehlerkorrektur}: IP enthält keine Mechanismen zur Fehlererkennung und -korrektur der übermittelten Daten.
+    \item \textbf{Reihenfolge der Pakete}: IP garantiert nicht, dass Pakete in der Reihenfolge ankommen, in der sie gesendet wurden.
+    \item \textbf{Keine Verbindungskontrolle}: IP ist ein verbindungsloses Protokoll, das keine dauerhafte Verbindung zwischen Sender und Empfänger aufrechterhält.
+\end{itemize}
+
+Aus diesen Gründen verwenden Anwendungen TCP (Transmission Control Protocol) oder UDP (User Datagram Protocol) als Transportprotokolle, um zusätzliche Funktionen wie Zuverlässigkeit, Fehlerkorrektur und Sequenzierung bereitzustellen.
+
+\subsection*{2.}
+
+UDP (User Datagram Protocol) wird in bestimmten Anwendungsfällen gegenüber TCP bevorzugt, trotz seiner geringeren Zuverlässigkeit. Zwei Vorteile von UDP sind:
+
+\begin{itemize}
+    \item \textbf{Geringere Latenz}: UDP ist schneller als TCP, da es keine Verbindung aufbaut und keine Zustellbestätigungen (ACKs) verwendet. Dies reduziert die Übertragungsverzögerung und ist besonders vorteilhaft für zeitkritische Anwendungen wie VoIP (Voice over IP), Online-Gaming und Echtzeit-Video-Streaming.
+    \item \textbf{Einfachheit und geringerer Overhead}: UDP hat einen geringeren Protokolloverhead im Vergleich zu TCP. Es verwendet ein einfacheres Protokoll ohne komplexe Steuerungsmechanismen wie Verbindungsaufbau, Fehlerkorrektur und Flusskontrolle. Dies führt zu weniger Datenverkehr und weniger Ressourcenverbrauch.
+\end{itemize}
+
+\subsection*{3.}
+
+Ja, es ist möglich, dass eine Anwendung Daten zuverlässig austauscht, selbst wenn sie UDP verwendet. Allerdings muss die Zuverlässigkeit in diesem Fall von der Anwendung selbst implementiert werden. Hier sind einige Möglichkeiten, wie Anwendungen Zuverlässigkeit über UDP sicherstellen können:
+
+\begin{itemize}
+    \item \textbf{Bestätigungsmechanismen (ACKs)}: Die Anwendung kann Empfangsbestätigungen für gesendete Pakete implementieren. Wenn der Sender keine Bestätigung erhält, sendet er das Paket erneut.
+    \item \textbf{Sequenznummern}: Pakete können mit Sequenznummern versehen werden, sodass der Empfänger Pakete in der richtigen Reihenfolge zusammenfügen kann und doppelte Pakete erkennt.
+    \item \textbf{Zeitüberschreitungen und Wiederholungen}: Wenn keine Bestätigung innerhalb einer bestimmten Zeitspanne empfangen wird, kann das Paket erneut gesendet werden.
+    \item \textbf{Fehlerprüfung und -korrektur}: Mechanismen wie Prüfsummen oder Fehlerkorrekturcodes (z.B. Forward Error Correction) können verwendet werden, um sicherzustellen, dass empfangene Daten korrekt sind und gegebenenfalls korrigiert werden können.
+\end{itemize}
+
+Diese Techniken erfordern zusätzliche Implementierung und erhöhen den Komplexitätsgrad der Anwendung, bieten aber die Möglichkeit, die Flexibilität und Geschwindigkeit von UDP zu nutzen, während gleichzeitig ein gewisser Grad an Zuverlässigkeit erreicht wird.
+
+\subsection*{4.}
+
+Ja, die UDP Segmente von Host A und Host B werden auf denselben Socket in Host C ge-demultiplext. 
+
+Dies liegt daran, dass UDP-Sockets in der Regel durch ein 2-Tupel bestehend aus der IP-Adresse und der Portnummer des Zielhosts identifiziert werden. In diesem Fall ist der Zielhost Host C mit der Portnummer 6832. Da beide Segmente an dieselbe IP-Adresse und dieselbe Portnummer gesendet werden, wird Host C diese Segmente auf denselben Socket weiterleiten. UDP bietet keine Mechanismen zur Unterscheidung der Segmente basierend auf den Absenderinformationen, sondern leitet sie einfach an den Zielport weiter.
+
+\subsection*{5.}
+
+Ein UDP-Socket wird über ein 2-Tupel (IP-Adresse und Portnummer) identifiziert, während ein TCP-Socket über ein 4-Tupel (Quell-IP-Adresse, Quell-Portnummer, Ziel-IP-Adresse, Ziel-Portnummer) identifiziert wird. Dies liegt an den grundlegenden Unterschieden in der Funktionsweise und den Anforderungen der beiden Protokolle:
+
+\begin{itemize}
+    \item \textbf{Verbindungsorientierung bei TCP}: TCP ist ein verbindungsorientiertes Protokoll, bei dem vor dem Datenaustausch eine Verbindung zwischen zwei Endpunkten hergestellt wird. Diese Verbindung wird durch die Kombination aus Quell- und Ziel-IP-Adresse sowie Quell- und Ziel-Portnummer eindeutig identifiziert. Das 4-Tupel ermöglicht es, mehrere parallele Verbindungen zwischen denselben Endpunkten zu unterscheiden.
+    
+    \item \textbf{Verbindungslosigkeit bei UDP}: UDP ist ein verbindungsloses Protokoll, das keine dauerhafte Verbindung zwischen Sender und Empfänger aufrechterhält. Da UDP keine Verbindung verwaltet und jedes Datagramm unabhängig behandelt wird, reicht es aus, das Datagramm durch die Ziel-IP-Adresse und die Ziel-Portnummer (2-Tupel) zu identifizieren. Dies ermöglicht eine einfache und schnelle Übermittlung der Daten ohne die Notwendigkeit einer komplexen Verbindungsverwaltung.
+    
+    \item \textbf{Effizienz und Einfachheit bei UDP}: Da UDP keine Verbindungen aufbaut oder verwaltet, ist es effizienter und einfacher zu implementieren. Die Identifikation über ein 2-Tupel reicht aus, um die Datagramme an den richtigen Zielsocket zu übermitteln, was dem Designprinzip von UDP als leichtgewichtiges und schnelles Protokoll entspricht.
+\end{itemize}
+
+Diese Unterschiede spiegeln die jeweiligen Einsatzgebiete und Designziele von TCP und UDP wider, wobei TCP eine zuverlässige und geordnete Datenübertragung für Anwendungen erfordert, die eine stabile Verbindung benötigen, während UDP für Anwendungen optimiert ist, die auf Geschwindigkeit und Effizienz angewiesen sind und eine gewisse Fehlertoleranz aufweisen.
+\section*{7.2}
+\subsection*{1.}
+
+Das RDT3.0 Protokoll (Stop-and-Wait) trifft folgende Annahmen über den zugrundeliegenden Übertragungskanal:
+
+\begin{enumerate}
+    \item Der Kanal kann Pakete verlieren.
+    \item Der Kanal kann Pakete beschädigen.
+    \item Der Kanal kann Pakete verzögern.
+    \item Der Kanal liefert Pakete in der Reihenfolge, in der sie gesendet wurden.
+    \item Der Kanal kann ACKs (Bestätigungen) verlieren, beschädigen oder verzögern.
+\end{enumerate}
+
+\subsection*{2.}
+
+Die finite state machine (FSM) der Empfängerseite für RDT3.0 sieht wie folgt aus:
+
+\begin{center}
+\begin{tikzpicture}[shorten >=1pt, node distance=3cm, on grid, auto]
+    \node[state, initial] (wait0) {Wait for 0};
+    \node[state, right=of wait0] (wait1) {Wait for 1};
+
+    \path[->]
+        (wait0) edge[loop above] node{pkt with seq=0 / send ACK0, deliver data} (wait0)
+        (wait0) edge[bend left, above] node{pkt with seq=1 / send ACK0} (wait1)
+        (wait1) edge[loop above] node{pkt with seq=1 / send ACK1, deliver data} (wait1)
+        (wait1) edge[bend left, below] node{pkt with seq=0 / send ACK1} (wait0);
+\end{tikzpicture}
+\end{center}
+
+\subsection*{3. }
+
+Nehmen wir an, dass der Übertragungskanal zusätzlich zu den in (1) genannten Annahmen die Paketreihenfolge ändern kann. Das Alternating-Bit Verfahren von RDT3.0 reicht für diesen Anwendungsfall nicht aus. Dies kann wie folgt gezeigt werden:
+
+\begin{center}
+  \begin{tikzpicture}[node distance=6cm, on grid, auto]
+    \node (S) [draw, rectangle] {Sender};
+    \node (R) [draw, rectangle, right=of S] {Empfänger};
+
+    \draw[->] (S) -- node[midway, above] {pkt0} (R);
+    \draw[->] (R) -- node[midway, below] {ACK0} (S);
+    \draw[->] (S) -- node[midway, above] {pkt1} (R);
+    \draw[->] (R) -- node[midway, below] {ACK1} (S);
+    \draw[->, dashed] (S) -- ++(1,0) |- node[pos=0.75, above] {pkt0} (R);
+    \draw[->] (R) -- node[midway, below] {ACK0} (S);
+\end{tikzpicture}
+\end{center}
+
+In diesem Beispiel:
+- Der Sender sendet \( pkt0 \) und der Empfänger bestätigt mit \( ACK0 \).
+- Der Sender sendet \( pkt1 \) und der Empfänger bestätigt mit \( ACK1 \).
+- Angenommen, \( pkt0 \) wird erneut gesendet aufgrund einer Paketverlustsituation oder Wiederholungsanforderung und kommt nach \( pkt1 \) an.
+
+Der Empfänger sieht \( pkt0 \) erneut, sendet jedoch \( ACK0 \). Der Sender könnte dies als eine Anforderung zur Wiederholung des letzten gesendeten Pakets missverstehen und \( pkt1 \) erneut senden, was zu doppelten Paketen beim Empfänger führt und die Reihenfolge der Daten durcheinander bringt. Dies zeigt, dass das Alternating-Bit Verfahren bei Paketreihenfolgeänderungen nicht zuverlässig ist.
+
+
+\section*{7.3}
+\subsection*{1.}
+
+Die Zeit \( d_{\text{SAW}} \) für die Übertragung eines Pakets umfasst die Zeit, die benötigt wird, um das Paket zu senden, sowie die Round-Trip-Time (RTT):
+
+\begin{itemize}
+    \item \textbf{Paketgröße \( L \)}: \SI{4000}{\byte} = \( 4000 \times 8 = 32000 \) Bits
+    \item \textbf{Übertragungsgeschwindigkeit \( C \)}: \SI{10}{\giga\bit\per\second} = \( 10 \times 10^9 \) Bits pro Sekunde
+    \item \textbf{Round-Trip-Time (RTT)}: \SI{20}{\milli\second} = \( 20 \times 10^{-3} \) Sekunden
+\end{itemize}
+
+Die Übertragungszeit \( t_{\text{send}} \) für ein Paket ist:
+
+\[
+t_{\text{send}} = \frac{L}{C} = \frac{32000}{10 \times 10^9} = 3.2 \times 10^{-6} \text{ Sekunden} = 3.2 \text{ Mikrosekunden}
+\]
+
+Da die RTT die Zeit ist, die vergeht, bis ein ACK empfangen wird, beträgt die gesamte Zeit \( d_{\text{SAW}} \) für ein Paket:
+
+\[
+d_{\text{SAW}} = t_{\text{send}} + \text{RTT} = 3.2 \text{ Mikrosekunden} + 20 \text{ Millisekunden} = 20.0032 \text{ Millisekunden}
+\]
+
+\subsection*{2.}
+
+Die Auslastung des Kanals \( U_{\text{SAW}} \) gibt an, wie viel Prozent der Zeit der Kanal mit der Datenübertragung beschäftigt ist. Dies ist das Verhältnis der Sendezeit zur Gesamtzeit:
+
+\[
+U_{\text{SAW}} = \frac{t_{\text{send}}}{d_{\text{SAW}}} = \frac{3.2 \times 10^{-6}}{20.0032 \times 10^{-3}} \approx 0.00016
+\]
+
+In Prozent ausgedrückt:
+
+\[
+U_{\text{SAW}} \approx 0.016 \%
+\]
+
+\subsection*{3.}
+
+Der effektive Durchsatz \( R_{\text{SAW}} \) ist die Anzahl der übertragenen Bits pro Sekunde, die tatsächlich erfolgreich empfangen werden:
+
+\[
+R_{\text{SAW}} = \frac{L}{d_{\text{SAW}}} = \frac{32000 \text{ Bits}}{20.0032 \times 10^{-3} \text{ Sekunden}} \approx 1.599 \times 10^6 \text{ Bits pro Sekunde} = 1.599 \text{ Mbps}
+\]
+
+Zusammengefasst:
+
+\begin{itemize}
+    \item Die Zeit \( d_{\text{SAW}} \) für die Übertragung eines Pakets über den \SI{10}{\giga\bit\per\second}-Link beträgt \SI{20.0032}{\milli\second}.
+    \item Die Auslastung \( U_{\text{SAW}} \) des Kanals beträgt \SI{0.016}{\%}.
+    \item Der effektive Durchsatz \( R_{\text{SAW}} \) der Verbindung beträgt \SI{1.599}{Mbps}.
+\end{itemize}
+\subsection*{4.}
+
+Um die Auslastung \( U_{\text{GBN}} \) von mehr als 90\% zu erreichen, muss die Fenstergröße \( N \) so gewählt werden, dass der Sender immer Pakete im Pipelining-Modus sendet. Die Auslastung \( U_{\text{GBN}} \) kann berechnet werden mit:
+
+\[
+U_{\text{GBN}} = \frac{N \cdot t_{\text{send}}}{d_{\text{GBN}}}
+\]
+
+Hier ist \( d_{\text{GBN}} \) die Zeit, die für eine vollständige RTT benötigt wird, also:
+
+\[
+d_{\text{GBN}} = \text{RTT}
+\]
+
+Da die Paketübertragungszeit \( t_{\text{send}} \) gleich \( 3.2 \) Mikrosekunden beträgt, und wir eine Auslastung von mehr als 90\% (\( U_{\text{GBN}} > 0.90 \)) erreichen wollen, ergibt sich:
+
+\[
+0.90 < \frac{N \cdot 3.2 \times 10^{-6} \text{ Sekunden}}{20 \times 10^{-3} \text{ Sekunden}}
+\]
+
+Daraus folgt:
+
+\[
+N > \frac{0.90 \times 20 \times 10^{-3}}{3.2 \times 10^{-6}}
+\]
+
+\[
+N > \frac{0.018}{3.2 \times 10^{-6}}
+\]
+
+\[
+N > 5625
+\]
+
+Die minimale Fenstergröße \( N \), um eine Auslastung von mehr als 90\% zu erreichen, beträgt also:
+
+\[
+N \geq 5626
+\]
+
+\subsection*{5.}
+
+Das Go-Back-N (GBN) Protokoll ist ineffizient, wenn Paketverluste auftreten, da es bei Verlust eines einzelnen Pakets alle nachfolgenden Pakete erneut senden muss, selbst wenn diese korrekt empfangen wurden. Dies führt zu einer hohen Anzahl redundanter Übertragungen und verringert somit den effektiven Durchsatz, insbesondere bei schlechten Netzwerkbedingungen oder hoher Paketverlustquote.
+
+\section*{6. Verbesserung des GBN-Protokolls: Selective Repeat (SR)}
+
+Das GBN-Protokoll kann durch das Selective Repeat (SR) Protokoll verbessert werden, um die Effizienz bei häufigen Paketverlusten zu erhöhen. Bei Selective Repeat werden nur die tatsächlich verlorenen oder beschädigten Pakete erneut gesendet, anstatt alle Pakete nach dem verlorenen Paket. Dies wird erreicht durch:
+
+\begin{itemize}
+    \item \textbf{Individuelle Bestätigungen (ACKs)}: Der Empfänger sendet ACKs für jedes korrekt empfangene Paket, und der Sender speichert eine Kopie jedes gesendeten Pakets im Sende-Puffer, bis eine Bestätigung empfangen wird.
+    \item \textbf{Paketpufferung beim Empfänger}: Der Empfänger speichert Pakete, die korrekt empfangen werden, auch wenn sie außerhalb der Reihenfolge ankommen, und fügt sie in der richtigen Reihenfolge zusammen, sobald alle fehlenden Pakete empfangen wurden.
+    \item \textbf{Wiederholtes Senden spezifischer Pakete}: Der Sender wiederholt nur die Übertragung der Pakete, für die innerhalb einer bestimmten Zeitspanne keine ACKs empfangen wurden.
+\end{itemize}
+
+Diese Mechanismen minimieren die Anzahl der redundanten Übertragungen und erhöhen den effektiven Durchsatz, insbesondere in Netzwerken mit hoher Fehlerrate, indem sie die Übertragungskapazität effizienter nutzen.
+
+\end{document}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
